@@ -74,7 +74,8 @@ class RSSServlet < WEBrick::HTTPServlet::AbstractServlet
 
   def do_GET(req, res)
     klass, opts = @options
-    puts opts
+    # puts "klass = #{klass}"
+    # puts "opts = #{opts}"
     res.body = klass.new(opts).output(RSSFormatter).to_s
     res.content_type = "application/xml; charset=utf-8"
   end
