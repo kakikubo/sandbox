@@ -1,6 +1,8 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 require 'cgi'
+require 'open-uri'
+require 'kconv'
 
 #  % wget -O samplepage.html http://crawler.sbcr.jp/samplepage.html
 def parse(page_source)
@@ -20,5 +22,5 @@ def format_text(title, url, url_title_time_ary)
   s
 end
 
-puts format_text("www.sbcr.jp トピックス", "http://crawler.sbcr.jp/samplepage.html",
-                 parse(`~/brew/bin/wget -q -O- http://crawler.sbcr.jp/samplepage.html`))
+contents = open("http://crawler.sbcr.jp/samplepage.html", &:read).toutf8
+puts format_text("www.sbcr.jp トピックス", "http://crawler.sbcr.jp/samplepage.html", parse(contents))
