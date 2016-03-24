@@ -1,5 +1,6 @@
 #! /usr/bin/env ruby
 #
+require 'pp'
 
 # 1問目
 # v = 0
@@ -99,6 +100,14 @@
 #print "#{deg} #{dis}\n"
 
 # 4問目考え中
+def in_range(a,x,y)
+  if x <= a && a <= y
+    return true
+  else
+    return false
+  end
+end
+
 itenum = gets.chomp.to_i
 stack = []
 (itenum).times {
@@ -125,23 +134,21 @@ stack.each do |x,y|
   substack.each_with_index do |a,i|
     xx, yy = a[0], a[1]
     x_range = y_range = false
-    if xx < x && x < yy
-      x_range = true
-      substack[i][0] = x
-    end
-    if xx < y && y << yy
-      y_range = true
-      substack[i][1] = y
-    end
-    if !x_range && !y_range
+    if !in_range(x, xx, yy) && !in_range(y, xx, yy)
       substack.push([x,y])
+      break
+    elsif in_range(x,xx,yy) && in_range(y,xx,yy)
+      break
+    elsif in_range(x,xx,yy) && !in_range(y,xx,yy)
+      substack[i][1] = y
+    elsif !in_range(x,xx,yy) && in_range(y,xx,yy)
+      substack[i][0] = y
     end
   end
 end
-
+substack.sort!
 substack.each do |x,y|
   x = sprintf("%04d",x)
   y = sprintf("%04d",y)
-  print "####\n"
   print "#{x}-#{y}\n"
 end
